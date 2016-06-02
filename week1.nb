@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[     43958,       1001]
-NotebookOptionsPosition[     41707,        931]
-NotebookOutlinePosition[     42904,        966]
-CellTagsIndexPosition[     42861,        963]
+NotebookDataLength[     47107,       1092]
+NotebookOptionsPosition[     44694,       1016]
+NotebookOutlinePosition[     45783,       1049]
+CellTagsIndexPosition[     45740,       1046]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -392,7 +392,8 @@ Cell[BoxData[
  CellChangeTimes->{3.673761173567383*^9, 3.673761209852529*^9, 
   3.6737616231104603`*^9, 3.67376188733283*^9, 3.673767641942013*^9, 
   3.673768109601046*^9, 3.6738449693566313`*^9, 3.6738471429718657`*^9, 
-  3.673847455211813*^9, 3.673847486987775*^9, 3.673847720773576*^9}]
+  3.673847455211813*^9, 3.673847486987775*^9, 3.673847720773576*^9, 
+  3.6738541798298597`*^9}]
 }, Open  ]],
 
 Cell["We define the same hypothesis and cost functions", "Text",
@@ -509,12 +510,93 @@ Cell[BoxData[{
    3.673847218473617*^9, 3.673847218715535*^9}, 3.673847793132629*^9}],
 
 Cell["\<\
+To check that the step function works, we can plot the step function as a \
+function of the iteration number to picture the learning rate. We do so by \
+creating the learning function\
+\>", "Text",
+ CellChangeTimes->{{3.6738556045132*^9, 3.67385563794447*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"Learning", "[", "x_", "]"}], ":=", 
+   RowBox[{"Cost", "@@", 
+    RowBox[{"Nest", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"Apply", "[", 
+        RowBox[{"Step", ",", "#"}], "]"}], "&"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"1", ",", "1"}], "}"}], ",", "x"}], "]"}]}]}], ";"}]], "Input"],
+
+Cell["We do indeed learn, as seen in the plot below", "Text",
+ CellChangeTimes->{{3.673855660480751*^9, 3.673855672015688*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"learningRate", "=", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{"#", ",", 
+      RowBox[{"AxesLabel", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"\"\<Iterations\>\"", ",", "\"\<Cost\>\""}], "}"}]}]}], "]"}],
+     "&"}], "@", 
+   RowBox[{"Transpose", "@", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"Range", "[", 
+       RowBox[{"0", ",", "10"}], "]"}], ",", 
+      RowBox[{"Learning", "/@", 
+       RowBox[{"Range", "[", 
+        RowBox[{"0", ",", "10"}], "]"}]}]}], "}"}]}]}]}]], "Input",
+ CellChangeTimes->{{3.6738557125443983`*^9, 3.6738558424608097`*^9}}],
+
+Cell[BoxData[
+ GraphicsBox[{{}, {{}, {}, 
+    {RGBColor[0.368417, 0.506779, 0.709798], PointSize[0.019444444444444445`],
+      AbsoluteThickness[1.6], 
+     LineBox[{{0.8509385032870928, 8.614870145329712*^9}, {1., 
+      3.6627714925595837`*^9}, {2., 6.656428308691195*^8}, {3., 
+      3.942159048668314*^8}, {4., 3.686641046765357*^8}, {5., 
+      3.6535536163639885`*^8}, {6., 3.641182525391833*^8}, {7., 
+      3.6312943941876554`*^8}, {8., 3.622204699613302*^8}, {9., 
+      3.6137239071283215`*^8}, {10., 3.605799762311075*^8}}]}}, {}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->{True, True},
+  AxesLabel->{
+    FormBox["\"Iterations\"", TraditionalForm], 
+    FormBox["\"Cost\"", TraditionalForm]},
+  AxesOrigin->{0, 0},
+  DisplayFunction->Identity,
+  Frame->{{False, False}, {False, False}},
+  FrameLabel->{{None, None}, {None, None}},
+  FrameTicks->{{Automatic, Automatic}, {Automatic, Automatic}},
+  GridLines->{None, None},
+  GridLinesStyle->Directive[
+    GrayLevel[0.5, 0.4]],
+  Method->{},
+  PlotRange->{{0, 10.}, {0, 8.614870145329712*^9}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{{
+     Scaled[0.02], 
+     Scaled[0.02]}, {
+     Scaled[0.02], 
+     Scaled[0.05]}},
+  Ticks->{Automatic, Automatic}]], "Output",
+ CellChangeTimes->{{3.6738557174774017`*^9, 3.673855842809347*^9}}]
+}, Open  ]],
+
+Cell["\<\
 We then step through the algorithm ten times and plot all the lines of all \
-intermediate steps\
+intermediate steps to see how the regression converges towards the optimum\
 \>", "Text",
  CellChangeTimes->{{3.6738449943418627`*^9, 3.6738450310125732`*^9}, {
   3.673845456465522*^9, 3.673845471993745*^9}, {3.673847310055914*^9, 
-  3.673847318432705*^9}, {3.673847808932745*^9, 3.6738478124693193`*^9}}],
+  3.673847318432705*^9}, {3.673847808932745*^9, 3.6738478124693193`*^9}, {
+  3.6738558656201353`*^9, 3.673855873386917*^9}}],
 
 Cell[CellGroupData[{
 
@@ -924,8 +1006,11 @@ Sxu87OyXSZge3fenuyELiwi9BZWKhPkNcXZFRiz8D7KTMwk=
  CellChangeTimes->{{3.6738470255902367`*^9, 3.673847079404131*^9}, {
    3.673847139297831*^9, 3.673847196828869*^9}, {3.673847234518961*^9, 
    3.6738473267135267`*^9}, {3.673847467750585*^9, 3.6738474908030043`*^9}, 
-   3.6738478151881866`*^9}]
-}, Open  ]]
+   3.6738478151881866`*^9, 3.6738541854205093`*^9}]
+}, Open  ]],
+
+Cell["", "Text",
+ CellChangeTimes->{{3.673855564946192*^9, 3.6738555762178783`*^9}}]
 }, Open  ]]
 }, Open  ]]
 },
@@ -947,10 +1032,8 @@ StyleDefinitions->Notebook[{
     StyleData["Subsection"], 
     CellMargins -> {{66, Inherited}, {Inherited, Inherited}}], 
    Cell[
-    StyleData["Input"], Background -> GrayLevel[0.95]]}, 
-  WindowSize -> {808, 751}, 
-  WindowMargins -> {{Automatic, 150}, {Automatic, 39}}, Visible -> False, 
-  ShowCellTags -> True, FrontEndVersion -> 
+    StyleData["Input"], Background -> GrayLevel[0.95]]}, Visible -> False, 
+  FrontEndVersion -> 
   "10.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (June 27, 2014)", 
   StyleDefinitions -> "PrivateStylesheetFormatting.nb"]
 ]
@@ -990,17 +1073,25 @@ Cell[12161, 318, 106, 1, 32, "Subsection"],
 Cell[12270, 321, 308, 6, 55, "Text"],
 Cell[CellGroupData[{
 Cell[12603, 331, 1004, 28, 123, "Input"],
-Cell[13610, 361, 1326, 33, 213, "Output"]
+Cell[13610, 361, 1353, 34, 213, "Output"]
 }, Open  ]],
-Cell[14951, 397, 230, 3, 33, "Text"],
-Cell[15184, 402, 1221, 38, 127, "Input"],
-Cell[16408, 442, 1073, 23, 143, "Text"],
-Cell[17484, 467, 1660, 41, 113, "Input"],
-Cell[19147, 510, 335, 6, 33, "Text"],
+Cell[14978, 398, 230, 3, 33, "Text"],
+Cell[15211, 403, 1221, 38, 127, "Input"],
+Cell[16435, 443, 1073, 23, 143, "Text"],
+Cell[17511, 468, 1660, 41, 113, "Input"],
+Cell[19174, 511, 270, 5, 55, "Text"],
+Cell[19447, 518, 348, 11, 44, "Input"],
+Cell[19798, 531, 127, 1, 33, "Text"],
 Cell[CellGroupData[{
-Cell[19507, 520, 1376, 36, 113, "Input"],
-Cell[20886, 558, 20781, 368, 213, "Output"]
-}, Open  ]]
+Cell[19950, 536, 620, 18, 62, "Input"],
+Cell[20573, 556, 1328, 32, 222, "Output"]
+}, Open  ]],
+Cell[21916, 591, 442, 7, 55, "Text"],
+Cell[CellGroupData[{
+Cell[22383, 602, 1376, 36, 113, "Input"],
+Cell[23762, 640, 20805, 368, 213, "Output"]
+}, Open  ]],
+Cell[44582, 1011, 84, 1, 33, "Text"]
 }, Open  ]]
 }, Open  ]]
 }
