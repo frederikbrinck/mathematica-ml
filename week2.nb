@@ -10,40 +10,46 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[     47211,       1093]
-NotebookOptionsPosition[     44798,       1017]
-NotebookOutlinePosition[     45887,       1050]
-CellTagsIndexPosition[     45844,       1047]
+NotebookDataLength[     49419,       1142]
+NotebookOptionsPosition[     46713,       1058]
+NotebookOutlinePosition[     47943,       1094]
+CellTagsIndexPosition[     47900,       1091]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
 Notebook[{
 
 Cell[CellGroupData[{
-Cell["Week 1 \[Dash] Stanford Machine Learning", "Section",
+Cell["Week 2 \[Dash] Stanford Machine Learning", "Section",
  CellChangeTimes->{{3.673755430017302*^9, 3.67375543310501*^9}, {
   3.673778840375724*^9, 3.673778841701872*^9}, {3.673847535019661*^9, 
-  3.6738475421315002`*^9}}],
+  3.6738475421315002`*^9}, {3.673952539766877*^9, 3.673952539883524*^9}}],
 
 Cell[CellGroupData[{
 
-Cell["Linear Regression", "Subsection",
- CellChangeTimes->{{3.673755420209304*^9, 3.673755422081389*^9}}],
+Cell["Multivariate Regression", "Subsection",
+ CellChangeTimes->{{3.673755420209304*^9, 3.673755422081389*^9}, {
+  3.673952544430229*^9, 3.6739525454668407`*^9}}],
 
 Cell[TextData[{
- "Let us create some random data, say housing sizes in square feet on ",
- StyleBox["x",
-  FontWeight->"Bold"],
- " and price levels on ",
+ "Let us create some random data, say housing size, number of bedrooms, and \
+age of the house as a feature matrix, and price levels on ",
  StyleBox["y",
   FontWeight->"Bold"],
- ", and plot it."
+ ". Although we deal with a multi-dimensional case, traditionally we consider \
+the training features as a part of ",
+ StyleBox["x",
+  FontWeight->"Bold"],
+ " and the training labels as a part of ",
+ StyleBox["y",
+  FontWeight->"Bold"],
+ "."
 }], "Text",
  CellChangeTimes->{{3.673758870599585*^9, 3.6737588970137777`*^9}, {
   3.673758949575046*^9, 3.6737589612845182`*^9}, {3.6737590694109573`*^9, 
   3.673759088881713*^9}, {3.6737596610941896`*^9, 3.673759670028943*^9}, {
-  3.673778850094303*^9, 3.673778850598435*^9}, {3.673952594212655*^9, 
-  3.673952594890048*^9}, {3.673954266365198*^9, 3.673954268924017*^9}}],
+  3.673778850094303*^9, 3.673778850598435*^9}, {3.673952558523078*^9, 
+  3.673952665112299*^9}, {3.67395285798801*^9, 3.673952858500458*^9}}],
 
 Cell[CellGroupData[{
 
@@ -52,89 +58,96 @@ Cell[BoxData[{
   RowBox[{"trainX", "=", 
    RowBox[{"{", 
     RowBox[{
-    "100", ",", "320", ",", "213", ",", "512", ",", "58", ",", "84", ",", 
-     "113"}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+     RowBox[{"{", 
+      RowBox[{
+      "100", ",", "320", ",", "213", ",", "512", ",", "58", ",", "84", ",", 
+       "113"}], "}"}], ",", " ", 
+     RowBox[{"{", 
+      RowBox[{
+      "1", ",", "4", ",", "2", ",", "4", ",", "0", ",", "1", ",", "1"}], 
+      "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+      "7", ",", "4", ",", "12", ",", "21", ",", "9", ",", "3", ",", "31"}], 
+      "}"}]}], "}"}]}], ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"trainY", "=", 
    RowBox[{"{", 
     RowBox[{
     "140000", ",", "400000", ",", "241000", ",", "489000", ",", "78000", ",", 
      "123000", ",", "139000"}], "}"}]}], ";"}], "\[IndentingNewLine]", 
- RowBox[{
-  RowBox[{"reglp", "=", 
-   RowBox[{"ListPlot", "[", 
-    RowBox[{
-     RowBox[{"Transpose", "@", 
-      RowBox[{"{", 
-       RowBox[{"trainX", ",", "trainY"}], "}"}]}], ",", 
-     RowBox[{"AxesLabel", "\[Rule]", 
+ RowBox[{"grid", "=", 
+  RowBox[{"Grid", "[", 
+   RowBox[{
+    RowBox[{"MapThread", "[", 
+     RowBox[{"Prepend", ",", 
       RowBox[{"{", 
        RowBox[{
-       "\"\<Size (\!\(\*SuperscriptBox[\(feet\), \(2\)]\))\>\"", ",", 
-        "\"\<Price ($)\>\""}], "}"}]}]}], "]"}]}], 
-  ";"}], "\[IndentingNewLine]", 
- RowBox[{"Show", "[", "reglp", "]"}]}], "Input",
+        RowBox[{"Prepend", "[", 
+         RowBox[{
+          RowBox[{"Transpose", "@", 
+           RowBox[{"Append", "[", 
+            RowBox[{"trainX", ",", "trainY"}], "]"}]}], ",", 
+          RowBox[{"{", 
+           RowBox[{
+           "\"\<Size (\!\(\*SuperscriptBox[\(feet\), \(2\)]\))\>\"", ",", 
+            "\"\<Bedrooms\>\"", ",", "\"\<Age (years)\>\"", ",", 
+            "\"\<Price ($)\>\""}], "}"}]}], "]"}], ",", 
+        RowBox[{"Join", "[", 
+         RowBox[{
+          RowBox[{"{", "\"\<Examples\>\"", "}"}], ",", 
+          RowBox[{"Range", "[", 
+           RowBox[{"1", ",", "7"}], "]"}]}], "]"}]}], "}"}]}], "]"}], ",", 
+    RowBox[{"Dividers", "\[Rule]", "Center"}]}], "]"}]}]}], "Input",
  CellChangeTimes->{{3.6737551715034323`*^9, 3.673755314684311*^9}, {
    3.673755395268762*^9, 3.673755410724573*^9}, {3.67375815618574*^9, 
    3.673758159327218*^9}, 3.673758261285145*^9, {3.673758748464593*^9, 
    3.673758757090879*^9}, 3.673759021317659*^9, {3.673761185683119*^9, 
-   3.673761190333435*^9}, {3.673845174675893*^9, 3.673845210600327*^9}}],
+   3.673761190333435*^9}, {3.673845174675893*^9, 3.673845210600327*^9}, {
+   3.673952668433923*^9, 3.673952921867156*^9}, {3.67395298854256*^9, 
+   3.6739530178910313`*^9}, {3.673953198247307*^9, 3.673953271639649*^9}, {
+   3.673953304660089*^9, 3.673953428090294*^9}, {3.6739535651261997`*^9, 
+   3.673953680730729*^9}, {3.6739537253971357`*^9, 3.6739537797286873`*^9}}],
 
 Cell[BoxData[
- GraphicsBox[{{}, 
-   {RGBColor[0.368417, 0.506779, 0.709798], PointSize[0.019444444444444445`], 
-    AbsoluteThickness[1.6], 
-    PointBox[{{100., 140000.}, {320., 400000.}, {213., 241000.}, {512., 
-     489000.}, {58., 78000.}, {84., 123000.}, {113., 139000.}}]}, {}},
-  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
-  Axes->{True, True},
-  AxesLabel->{
-    FormBox[
-    "\"Size (\\!\\(\\*SuperscriptBox[\\(feet\\), \\(2\\)]\\))\"", 
-     TraditionalForm], 
-    FormBox["\"Price ($)\"", TraditionalForm]},
-  AxesOrigin->{0, 0},
-  DisplayFunction->Identity,
-  Frame->{{False, False}, {False, False}},
-  FrameLabel->{{None, None}, {None, None}},
-  FrameTicks->{{Automatic, Automatic}, {Automatic, Automatic}},
-  GridLines->{None, None},
-  GridLinesStyle->Directive[
-    GrayLevel[0.5, 0.4]],
-  Method->{},
-  PlotRange->{{0, 512.}, {0, 489000.}},
-  PlotRangeClipping->True,
-  PlotRangePadding->{{
-     Scaled[0.02], 
-     Scaled[0.02]}, {
-     Scaled[0.02], 
-     Scaled[0.05]}},
-  Ticks->{Automatic, Automatic}]], "Output",
- CellChangeTimes->{{3.673845200612886*^9, 3.673845211147258*^9}, 
-   3.673847431161907*^9, 3.673847548182987*^9}]
+ TagBox[GridBox[{
+    {"\<\"Examples\"\>", "\<\"Size (\\!\\(\\*SuperscriptBox[\\(feet\\), \
+\\(2\\)]\\))\"\>", "\<\"Bedrooms\"\>", "\<\"Age (years)\"\>", "\<\"Price \
+($)\"\>"},
+    {"1", "100", "1", "7", "140000"},
+    {"2", "320", "4", "4", "400000"},
+    {"3", "213", "2", "12", "241000"},
+    {"4", "512", "4", "21", "489000"},
+    {"5", "58", "0", "9", "78000"},
+    {"6", "84", "1", "3", "123000"},
+    {"7", "113", "1", "31", "139000"}
+   },
+   AutoDelete->False,
+   GridBoxDividers->{
+    "Columns" -> {False, {True}, False}, "Rows" -> {False, {True}, False}},
+   GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Output",
+ CellChangeTimes->{{3.673953635399214*^9, 3.6739536809812517`*^9}, {
+  3.673953739205607*^9, 3.673953779995492*^9}}]
 }, Open  ]],
 
 Cell["\<\
-Now, we define a linear hypothesis function since our data seems to allow for \
-a linear approximation\
+Now, we define a our hypothesis function which is the dot product between any \
+two n-dimensional vectors\
 \>", "Text",
  CellChangeTimes->{{3.673759610599203*^9, 3.673759634285644*^9}, 
    3.6737597156994667`*^9, {3.673759882767686*^9, 3.673759885735944*^9}, {
    3.673759996238603*^9, 3.673759999149341*^9}, {3.673761873321949*^9, 
    3.67376187569023*^9}, {3.673779098073423*^9, 3.673779098312457*^9}, {
-   3.673847553291862*^9, 3.673847609289845*^9}}],
+   3.673847553291862*^9, 3.673847609289845*^9}, {3.673954040329335*^9, 
+   3.673954047728744*^9}, {3.673954191973563*^9, 3.673954199933509*^9}}],
 
 Cell[BoxData[
  RowBox[{
-  RowBox[{
-   RowBox[{"Hyp", "[", 
-    RowBox[{"v_", ",", "x_"}], "]"}], ":=", 
-   RowBox[{
-    RowBox[{"v", "[", 
-     RowBox[{"[", "1", "]"}], "]"}], "+", 
-    RowBox[{
-     RowBox[{"v", "[", 
-      RowBox[{"[", "2", "]"}], "]"}], " ", "x"}]}]}], ";"}]], "Input",
+  RowBox[{"Hyp", "[", 
+   RowBox[{"v_", ",", "x_"}], "]"}], ":=", 
+  RowBox[{"Dot", "[", 
+   RowBox[{"v", ",", "x"}], "]"}]}]], "Input",
  CellChangeTimes->{{3.673755456005307*^9, 3.673755471697027*^9}, {
    3.6737555168731833`*^9, 3.673755588414816*^9}, {3.673755817971774*^9, 
    3.673755861753669*^9}, {3.67375589306606*^9, 3.673755969762055*^9}, {
@@ -150,7 +163,36 @@ Cell[BoxData[
    3.673759873241077*^9}, {3.673760001942459*^9, 3.673760003485793*^9}, {
    3.67376187054179*^9, 3.673761870999147*^9}, {3.673771285027152*^9, 
    3.673771293178565*^9}, {3.6737791201212997`*^9, 3.6737791204691057`*^9}, {
-   3.673843302996236*^9, 3.6738433031867533`*^9}}],
+   3.673843302996236*^9, 3.6738433031867533`*^9}, {3.6739538466410627`*^9, 
+   3.673953944668131*^9}, {3.6739540330027523`*^9, 3.6739540569249907`*^9}, {
+   3.673954087002698*^9, 3.673954187010599*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Transpose", "@", 
+  RowBox[{"{", 
+   RowBox[{"1", ",", "2", ",", "3"}], "}"}]}]], "Input",
+ CellChangeTimes->{{3.673954155281893*^9, 3.673954159969058*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"Transpose", "::", "nmtx"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"The first two levels of \[NoBreak]\\!\\({1, 2, 3}\\)\
+\[NoBreak] cannot be transposed. \\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", \
+ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:ref/message/Transpose/nmtx\\\", ButtonNote -> \
+\\\"Transpose::nmtx\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.6739541602647038`*^9}],
+
+Cell[BoxData[
+ RowBox[{"Transpose", "[", 
+  RowBox[{"{", 
+   RowBox[{"1", ",", "2", ",", "3"}], "}"}], "]"}]], "Output",
+ CellChangeTimes->{3.6739541602722*^9}]
+}, Open  ]],
 
 Cell["followed by the squared error cost function", "Text",
  CellChangeTimes->{{3.67376125494387*^9, 3.673761257816112*^9}, {
@@ -455,8 +497,7 @@ learning rate above ",
    StyleBox[
     RowBox[{"1", " ", 
      SuperscriptBox["10", 
-      RowBox[{"-", "5"}]]}], "Input"], TraditionalForm]],
-  FormatType->"TraditionalForm"],
+      RowBox[{"-", "5"}]]}], "Input"], TraditionalForm]]],
  " will thus make the gradient descent algorithm overshoot. Instead of \
 setting a very low learning rate parameter, as below, a better fix would be \
 to represent the housing prices in terms of thousand dollars."
@@ -1016,10 +1057,12 @@ Cell["", "Text",
 }, Open  ]]
 },
 WindowSize->{720, 851},
-WindowMargins->{{0, Automatic}, {Automatic, 0}},
+WindowMargins->{{69, Automatic}, {Automatic, 0}},
 FrontEndVersion->"10.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (June 27, \
 2014)",
 StyleDefinitions->Notebook[{
+   Cell[
+    StyleData[StyleDefinitions -> "Default.nb"]], 
    Cell[
     StyleData[StyleDefinitions -> "Default.nb"]], 
    Cell[
@@ -1033,8 +1076,9 @@ StyleDefinitions->Notebook[{
     StyleData["Subsection"], 
     CellMargins -> {{66, Inherited}, {Inherited, Inherited}}], 
    Cell[
-    StyleData["Input"], Background -> GrayLevel[0.95]]}, Visible -> False, 
-  FrontEndVersion -> 
+    StyleData["Input"], Background -> GrayLevel[0.95]]}, 
+  WindowSize -> {808, 751}, WindowMargins -> {{4, Automatic}, {Automatic, 4}},
+   Visible -> False, FrontEndVersion -> 
   "10.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (June 27, 2014)", 
   StyleDefinitions -> "PrivateStylesheetFormatting.nb"]
 ]
@@ -1050,49 +1094,54 @@ CellTagsIndex->{}
 (*NotebookFileOutline
 Notebook[{
 Cell[CellGroupData[{
-Cell[580, 22, 224, 3, 60, "Section"],
+Cell[580, 22, 270, 3, 60, "Section"],
 Cell[CellGroupData[{
-Cell[829, 29, 105, 1, 32, "Subsection"],
-Cell[937, 32, 582, 13, 55, "Text"],
+Cell[875, 29, 162, 2, 32, "Subsection"],
+Cell[1040, 33, 807, 18, 77, "Text"],
 Cell[CellGroupData[{
-Cell[1544, 49, 1248, 31, 123, "Input"],
-Cell[2795, 82, 1164, 31, 213, "Output"]
+Cell[1872, 55, 2256, 54, 182, "Input"],
+Cell[4131, 111, 797, 19, 157, "Output"]
 }, Open  ]],
-Cell[3974, 116, 461, 8, 55, "Text"],
-Cell[4438, 126, 1439, 26, 44, "Input"],
-Cell[5880, 154, 175, 2, 33, "Text"],
-Cell[6058, 158, 782, 25, 110, "Input"],
-Cell[6843, 185, 392, 7, 55, "Text"],
+Cell[4943, 133, 560, 9, 55, "Text"],
+Cell[5506, 144, 1462, 23, 44, "Input"],
 Cell[CellGroupData[{
-Cell[7260, 196, 1412, 37, 96, "Input"],
-Cell[8675, 235, 460, 11, 35, "Output"],
-Cell[9138, 248, 3078, 65, 213, "Output"]
+Cell[6993, 171, 180, 4, 44, "Input"],
+Cell[7176, 177, 474, 10, 24, "Message"],
+Cell[7653, 189, 160, 4, 28, "Output"]
+}, Open  ]],
+Cell[7828, 196, 175, 2, 33, "Text"],
+Cell[8006, 200, 782, 25, 110, "Input"],
+Cell[8791, 227, 392, 7, 55, "Text"],
+Cell[CellGroupData[{
+Cell[9208, 238, 1412, 37, 96, "Input"],
+Cell[10623, 277, 460, 11, 35, "Output"],
+Cell[11086, 290, 3078, 65, 213, "Output"]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[12265, 319, 106, 1, 32, "Subsection"],
-Cell[12374, 322, 308, 6, 55, "Text"],
+Cell[14213, 361, 106, 1, 32, "Subsection"],
+Cell[14322, 364, 308, 6, 55, "Text"],
 Cell[CellGroupData[{
-Cell[12707, 332, 1004, 28, 123, "Input"],
-Cell[13714, 362, 1353, 34, 213, "Output"]
+Cell[14655, 374, 1004, 28, 123, "Input"],
+Cell[15662, 404, 1353, 34, 213, "Output"]
 }, Open  ]],
-Cell[15082, 399, 230, 3, 33, "Text"],
-Cell[15315, 404, 1221, 38, 127, "Input"],
-Cell[16539, 444, 1073, 23, 143, "Text"],
-Cell[17615, 469, 1660, 41, 113, "Input"],
-Cell[19278, 512, 270, 5, 55, "Text"],
-Cell[19551, 519, 348, 11, 44, "Input"],
-Cell[19902, 532, 127, 1, 33, "Text"],
+Cell[17030, 441, 230, 3, 33, "Text"],
+Cell[17263, 446, 1221, 38, 111, "Input"],
+Cell[18487, 486, 1040, 22, 126, "Text"],
+Cell[19530, 510, 1660, 41, 97, "Input"],
+Cell[21193, 553, 270, 5, 49, "Text"],
+Cell[21466, 560, 348, 11, 28, "Input"],
+Cell[21817, 573, 127, 1, 30, "Text"],
 Cell[CellGroupData[{
-Cell[20054, 537, 620, 18, 62, "Input"],
-Cell[20677, 557, 1328, 32, 222, "Output"]
+Cell[21969, 578, 620, 18, 46, "Input"],
+Cell[22592, 598, 1328, 32, 222, "Output"]
 }, Open  ]],
-Cell[22020, 592, 442, 7, 55, "Text"],
+Cell[23935, 633, 442, 7, 49, "Text"],
 Cell[CellGroupData[{
-Cell[22487, 603, 1376, 36, 113, "Input"],
-Cell[23866, 641, 20805, 368, 213, "Output"]
+Cell[24402, 644, 1376, 36, 97, "Input"],
+Cell[25781, 682, 20805, 368, 213, "Output"]
 }, Open  ]],
-Cell[44686, 1012, 84, 1, 33, "Text"]
+Cell[46601, 1053, 84, 1, 30, "Text"]
 }, Open  ]]
 }, Open  ]]
 }
